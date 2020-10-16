@@ -7,7 +7,7 @@ from gs_interfaces.srv import NavigationSystem
 from gs_interfaces.msg import PointGPS,OptVelocity
 from geometry_msgs.msg import Point
 
-class NavigationController():
+class NavigationManager():
     def __local_position_callback(self,data):
         self.__local_position=data
 
