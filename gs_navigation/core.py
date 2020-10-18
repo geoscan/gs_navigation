@@ -3,7 +3,7 @@
 
 import rospy
 from rospy import ServiceProxy,Subscriber
-from gs_interfaces.srv import NavigationSystem
+from gs_interfaces.srv import NavigationSystem,Live
 from gs_interfaces.msg import PointGPS,OptVelocity
 from geometry_msgs.msg import Point
 
