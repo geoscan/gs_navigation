@@ -94,16 +94,19 @@ OpticalFlow(alive, navSystem) - alive и navSystem сервисы
 #### Поля:
 * __alive - rospy.ServiceProxy: gs_interfaces.srv.Live
 * __nav_service - rospy.ServiceProxy: gs_interfaces.srv.NavigationSystem
+* __set_nav_service - rospy.ServiceProxy: gs_interfaces.srv.SetNavigationSystem
 * gps - GlobalNavigation
 * lps - LocalNavigation
 * opt - OpticalFlow
 
 #### Методы:
-* system - получить текущую систему навигации
+* system - получить текущую систему позиционирования
+* setSystem(system) - установить систему позиционирования, system - название системы позиционирования
 
 #### Используемые сервисы:
 * geoscan/alive (gs_interfaces/Live)
-* geoscan/navigation/system (gs_interfaces/NavigationSystem)
+* geoscan/navigation/get_system (gs_interfaces/NavigationSystem)
+* geoscan/navigation/set_system (gs_interfaces/SetNavigationSystem)
 
 ## Необходимые пакеты:
 ROS:
