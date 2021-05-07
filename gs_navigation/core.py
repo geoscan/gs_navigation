@@ -3,7 +3,7 @@
 
 import rospy
 from rospy import ServiceProxy,Subscriber
-from gs_interfaces.srv import NavigationSystem,Live
+from gs_interfaces.srv import NavigationSystem,SetNavigationSystem,Live
 from gs_interfaces.msg import PointGPS,SatellitesGPS,OptVelocity
 from geometry_msgs.msg import Point
 from std_msgs.msg import Float32,Int8
@@ -126,8 +126,10 @@ class NavigationManager():
     def __init__(self):
         rospy.wait_for_service("geoscan/alive")
         rospy.wait_for_service("geoscan/navigation/get_system")
+        rospy.wait_for_service("geoscan/navigation/set_system")
         self.__alive = ServiceProxy("geoscan/alive",Live)
         self.__nav_service = ServiceProxy("geoscan/navigation/get_system",NavigationSystem)
+        self.__set_nav_service = ServiceProxy("geoscan/navigation/set_system",SetNavigationSystem)
 
         self.gps = GlobalNavigation(self.__alive, self.__nav_service)
         self.lps = LocalNavigation(self.__alive, self.__nav_service)
@@ -138,3 +140,9 @@ class NavigationManager():
             return self.__nav_service().navigation
         else:
             rospy.logwarn("Wait, connecting to flight controller")
+
+    def setSystem(self, system):
+        if ((system == "OPT") or (system == "GPS") or (system == "LPS")):
+            return self.__set_nav_service(system).status
+        else:
+            return False
