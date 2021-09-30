@@ -9,10 +9,10 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import Float32, Int32
 
 class LocalNavigation():
-    def __local_position_callback(self,data):
+    def __local_position_callback(self, data):
         self.__local_position = data
 
-    def __local_yaw_callback(self,data):
+    def __local_yaw_callback(self, data):
         self.__local_yaw = data.data
 
     def __local_status_callback(self, data):
@@ -34,24 +34,18 @@ class LocalNavigation():
 
     def position(self):
         if self.__alive().status:
-            if self.__nav_service().navigation == self.name:
-                rospy.wait_for_message(f"{self.__namespace}geoscan/navigation/local/position", Point)
             return self.__local_position.x, self.__local_position.y, self.__local_position.z
         else:
             rospy.logwarn("Wait, connecting to flight controller")
 
     def status(self):
         if self.__alive().status:
-            if self.__nav_service().navigation == self.name:
-                rospy.wait_for_message(f"{self.__namespace}geoscan/navigation/local/status", Int32)
             return self.__local_status
         else:
             rospy.logwarn("Wait, connecting to flight controller")
         
     def yaw(self):
         if self.__alive().status:
-            if self.__nav_service().navigation == self.name:
-                rospy.wait_for_message(f"{self.__namespace}geoscan/navigation/local/yaw", Float32)
             return self.__local_yaw
         else:
             rospy.logwarn("Wait, connecting to flight controller")
@@ -72,8 +66,6 @@ class OpticalFlow():
 
     def velocity(self):
         if self.__alive().status:
-            if self.__nav_service().navigation == self.name:
-                rospy.wait_for_message(f"{self.__namespace}geoscan/navigation/opt/velocity", OptVelocity)
             return self.__opt_velocity.x, self.__opt_velocity.y, self.__opt_velocity.range
         else:
             rospy.logwarn("Wait, connecting to flight controller")
