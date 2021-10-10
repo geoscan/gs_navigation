@@ -74,9 +74,7 @@ class NavigationManager():
     def __init__(self, namespace = ""):
         if namespace != "":
             namespace += "/"
-        rospy.wait_for_service(f"{namespace}geoscan/alive")
-        rospy.wait_for_service(f"{namespace}geoscan/navigation/get_system")
-        rospy.wait_for_service(f"{namespace}geoscan/navigation/set_system")
+            
         self.__alive = ServiceProxy(f"{namespace}geoscan/alive", Live)
         self.__nav_service = ServiceProxy(f"{namespace}geoscan/navigation/get_system", NavigationSystem)
         self.__set_nav_service = ServiceProxy(f"{namespace}geoscan/navigation/set_system", SetNavigationSystem)
