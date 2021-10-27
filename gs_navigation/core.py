@@ -33,10 +33,8 @@ class LocalNavigation():
         self.__local_yaw_subscriber = Subscriber(f"{self.__namespace}geoscan/navigation/local/yaw", Float32, self.__local_yaw_callback)
 
     def position(self):
-        if self.__alive().status:
-            return self.__local_position.x, self.__local_position.y, self.__local_position.z
-        else:
-            rospy.logwarn("Wait, connecting to flight controller")
+        # if self.__alive().status:
+        return self.__local_position
 
     def status(self):
         if self.__alive().status:
@@ -45,10 +43,7 @@ class LocalNavigation():
             rospy.logwarn("Wait, connecting to flight controller")
         
     def yaw(self):
-        if self.__alive().status:
-            return self.__local_yaw
-        else:
-            rospy.logwarn("Wait, connecting to flight controller")
+        return self.__local_yaw
 
 class OpticalFlow():
     def __opt_velocity_callback(self,data):
@@ -75,6 +70,7 @@ class NavigationManager():
         if namespace != "":
             namespace += "/"
             
+        # rospy.wait_for_service(f"{namespace}geoscan/alive")
         self.__alive = ServiceProxy(f"{namespace}geoscan/alive", Live)
         self.__nav_service = ServiceProxy(f"{namespace}geoscan/navigation/get_system", NavigationSystem)
         self.__set_nav_service = ServiceProxy(f"{namespace}geoscan/navigation/set_system", SetNavigationSystem)
