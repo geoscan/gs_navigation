@@ -1,1 +1,1 @@
-from .core import NavigationManager
+from .gs_navigation import NavigationManager
